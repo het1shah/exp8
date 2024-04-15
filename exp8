@@ -1,0 +1,19 @@
+x = [0.6, 1.5, 1.6, 2.5, 3.5];
+f = [0.9036, 0.3734, 0.3261, 0.08422, 0.01596];
+% Forward difference method
+function df = forwardDiff(x, f)
+  n = length(x);
+  df = zeros(n, 1);
+  for i = 1:n-1
+    df(i) = (f(i+1) - f(i)) / (x(i+1) - x(i));
+  end
+  df(end) = (f(end) - f(end-1)) / (x(end) - x(end-1));
+end
+
+true_df = @(x) 5*(-2*exp(-2*x) + x.*exp(-2*x));
+df_est = forwardDiff(x, f);
+
+fprintf('Estimated derivatives (Forward Difference):\n');
+disp(df_est);
+fprintf('True derivatives:\n');
+disp(true_df(x));
